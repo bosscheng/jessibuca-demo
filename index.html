@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./renderer.js"></script>
+    <style>
+        .root {
+            display: flex;
+            place-content: center;
+        }
+
+        .container-shell {
+            background: gray;
+            padding: 30px 4px 50px 4px;
+            border: 2px solid black;
+            width: auto;
+            position: relative;
+            border-radius: 5px;
+            box-shadow: 0 10px 20px;
+        }
+
+        .container-shell:before {
+            content: "jessibuca demo player";
+            position: absolute;
+            color: darkgray;
+            top: 4px;
+            left: 10px;
+            text-shadow: 1px 1px black;
+        }
+
+        #container {
+            background: rgb(13, 14, 27);
+            width: 640px;
+            height: 398px;
+        }
+
+        .input {
+            position: absolute;
+            display: flex;
+            bottom: 15px;
+            left: 10px;
+            right: 10px;
+            color: white;
+            place-content: stretch;
+        }
+
+        .input input {
+            flex: auto;
+        }
+
+        .err {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            color: red;
+        }
+
+        .option {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+            display: flex;
+            place-content: center;
+        }
+
+        .option span {
+            color: white;
+        }
+
+        @media (max-width: 720px) {
+            #container {
+                width: 90vw;
+                height: 52.7vw;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="root">
+    <div class="container-shell">
+        <div id="container"></div>
+        <div class="input">
+            <div>输入URL：</div>
+            <input autocomplete="on" value="" id="playHref"/>
+            <button id="play">播放</button>
+        </div>
+    </div>
+</div>
+<script>
+    var $player = document.getElementById('play');
+    var $playHref = document.getElementById('playHref');
+    var $container = document.getElementById('container');
+
+    var jessibuca = new Jessibuca({
+        container: $container,
+        videoBuffer: 0.2,
+        isResize: false, // 是否自适应尺寸
+        text: 'DNB', // 文案
+        background: 'https://seopic.699pic.com/photo/40011/0709.jpg_wh1200.jpg', // 背景
+        loadingText: '加载中' // 加载文案。 默认'加载中。。。。。'
+    });
+
+    jessibuca.onLog = msg => console.error(msg);
+    jessibuca.onRecord = (status) => console.log('onRecord', status);
+    jessibuca.onPause = () => console.log('onPause');
+    jessibuca.onPlay = () => console.log('onPlay');
+    jessibuca.onFullscreen = msg => console.log('onFullscreen', msg);
+
+
+
+    $player.addEventListener('click', function () {
+        var href = $playHref.value;
+        if (href) {
+            jessibuca.play(href);
+        }
+    }, false)
+</script>
+</body>
+</html>
