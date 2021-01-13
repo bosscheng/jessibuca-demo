@@ -5,6 +5,11 @@
     <title>Title</title>
     <script src="./renderer.js"></script>
     <style>
+
+        .root-wrap{
+            display: flex;
+            justify-content:center
+        }
         .root {
             display: flex;
             place-content: center;
@@ -29,7 +34,7 @@
             text-shadow: 1px 1px black;
         }
 
-        #container {
+        #container,#container2 {
             background: rgb(13, 14, 27);
             width: 640px;
             height: 398px;
@@ -77,16 +82,30 @@
     </style>
 </head>
 <body>
-<div class="root">
-    <div class="container-shell">
-        <div id="container"></div>
-        <div class="input">
-            <div>输入URL：</div>
-            <input autocomplete="on" value="" id="playHref"/>
-            <button id="play">播放</button>
+<div class="root-wrap">
+    <div class="root">
+        <div class="container-shell">
+            <div id="container"></div>
+            <div class="input">
+                <div>输入URL：</div>
+                <input autocomplete="on" value="" id="playHref"/>
+                <button id="play">播放</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="root">
+        <div class="container-shell">
+            <div id="container2"></div>
+            <div class="input">
+                <div>输入URL：</div>
+                <input autocomplete="on" value="" id="playHref2"/>
+                <button id="play2">播放</button>
+            </div>
         </div>
     </div>
 </div>
+
 <script>
     var $player = document.getElementById('play');
     var $playHref = document.getElementById('playHref');
@@ -113,6 +132,35 @@
         var href = $playHref.value;
         if (href) {
             jessibuca.play(href);
+        }
+    }, false)
+</script>
+<script>
+    var $player2 = document.getElementById('play2');
+    var $playHref2 = document.getElementById('playHref2');
+    var $container2 = document.getElementById('container2');
+
+    var jessibuca2 = new Jessibuca({
+        container: $container2,
+        videoBuffer: 0.2,
+        isResize: false, // 是否自适应尺寸
+        text: 'DNB', // 文案
+        background: 'https://seopic.699pic.com/photo/40011/0709.jpg_wh1200.jpg', // 背景
+        loadingText: '加载中' // 加载文案。 默认'加载中。。。。。'
+    });
+
+    jessibuca2.onLog = msg => console.error(msg);
+    jessibuca2.onRecord = (status) => console.log('onRecord', status);
+    jessibuca2.onPause = () => console.log('onPause');
+    jessibuca2.onPlay = () => console.log('onPlay');
+    jessibuca2.onFullscreen = msg => console.log('onFullscreen', msg);
+
+
+
+    $player2.addEventListener('click', function () {
+        var href = $playHref2.value;
+        if (href) {
+            jessibuca2.play(href);
         }
     }, false)
 </script>
