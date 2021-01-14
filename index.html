@@ -6,10 +6,11 @@
     <script src="./renderer.js"></script>
     <style>
 
-        .root-wrap{
+        .root-wrap {
             display: flex;
-            justify-content:center
+            justify-content: center
         }
+
         .root {
             display: flex;
             place-content: center;
@@ -34,7 +35,7 @@
             text-shadow: 1px 1px black;
         }
 
-        #container,#container2 {
+        #container, #container2 {
             background: rgb(13, 14, 27);
             width: 640px;
             height: 398px;
@@ -125,7 +126,7 @@
     jessibuca.onPause = () => console.log('onPause');
     jessibuca.onPlay = () => console.log('onPlay');
     jessibuca.onFullscreen = msg => console.log('onFullscreen', msg);
-
+    jessibuca.onMute = msg => console.log('onMute', msg);
 
 
     $player.addEventListener('click', function () {
@@ -150,11 +151,11 @@
     });
 
     jessibuca2.onLog = msg => console.error(msg);
-    jessibuca2.onRecord = (status) => console.log('onRecord', status);
-    jessibuca2.onPause = () => console.log('onPause');
-    jessibuca2.onPlay = () => console.log('onPlay');
-    jessibuca2.onFullscreen = msg => console.log('onFullscreen', msg);
-
+    jessibuca2.onRecord = (status) => console.log('onRecord2', status);
+    jessibuca2.onPause = () => console.log('onPause2');
+    jessibuca2.onPlay = () => console.log('onPlay2');
+    jessibuca2.onFullscreen = msg => console.log('onFullscreen2', msg);
+    jessibuca2.onMute = msg => console.log('onMute2', msg);
 
 
     $player2.addEventListener('click', function () {
