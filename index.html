@@ -27,7 +27,7 @@
         }
 
         .container-shell:before {
-            content: "jessibuca demo player";
+            content: attr(title);
             position: absolute;
             color: darkgray;
             top: 4px;
@@ -35,10 +35,13 @@
             text-shadow: 1px 1px black;
         }
 
-        #container, #container2 {
+
+
+
+        .container {
             background: rgb(13, 14, 27);
-            width: 640px;
-            height: 398px;
+            width: 448px;
+            height: 278px;
         }
 
         .input {
@@ -85,8 +88,8 @@
 <body>
 <div class="root-wrap">
     <div class="root">
-        <div class="container-shell">
-            <div id="container"></div>
+        <div class="container-shell" title="Jessibuca h264 demo">
+            <div class="container" id="container"></div>
             <div class="input">
                 <div>输入URL：</div>
                 <input autocomplete="on" value="" id="playHref"/>
@@ -96,8 +99,8 @@
     </div>
 
     <div class="root">
-        <div class="container-shell">
-            <div id="container2"></div>
+        <div class="container-shell" title="Jessibuca h264 wasm demo">
+            <div class="container" id="container2"></div>
             <div class="input">
                 <div>输入URL：</div>
                 <input autocomplete="on" value="" id="playHref2"/>
@@ -105,8 +108,34 @@
             </div>
         </div>
     </div>
-</div>
 
+</div>
+<div class="root-wrap">
+    <div class="root">
+        <div class="container-shell" title="Jessibuca h265 demo">
+            <div class="container" id="container3"></div>
+            <div class="input">
+                <div>输入URL：</div>
+                <input autocomplete="on" value="" id="playHref3"/>
+                <button id="play3">播放</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="root">
+        <div class="container-shell" title="Jessibuca h265 wasm demo">
+            <div class="container" id="container4"></div>
+            <div class="input">
+                <div>输入URL：</div>
+                <input autocomplete="on" value="" id="playHref4"/>
+                <button id="play4">播放</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var decoderList = ['ff.js', 'ff_wasm.js', 'libhevc_aac.js', 'libhevc_aac_wasm.js'];
+</script>
 <script>
     var $player = document.getElementById('play');
     var $playHref = document.getElementById('playHref');
@@ -115,6 +144,7 @@
     var jessibuca = new Jessibuca({
         container: $container,
         videoBuffer: 0.2,
+        decoder: decoderList[0], // 默认是 ff.js
         isResize: false, // 是否自适应尺寸
         text: 'DNB', // 文案
         background: 'https://seopic.699pic.com/photo/40011/0709.jpg_wh1200.jpg', // 背景
@@ -144,6 +174,7 @@
     var jessibuca2 = new Jessibuca({
         container: $container2,
         videoBuffer: 0.2,
+        decoder: decoderList[1],
         isResize: false, // 是否自适应尺寸
         text: 'DNB', // 文案
         background: 'https://seopic.699pic.com/photo/40011/0709.jpg_wh1200.jpg', // 背景
@@ -162,6 +193,66 @@
         var href = $playHref2.value;
         if (href) {
             jessibuca2.play(href);
+        }
+    }, false)
+</script>
+<script>
+    var $player3 = document.getElementById('play3');
+    var $playHref3 = document.getElementById('playHref3');
+    var $container3 = document.getElementById('container3');
+
+    var jessibuca3 = new Jessibuca({
+        container: $container3,
+        videoBuffer: 0.2,
+        decoder: decoderList[2],
+        isResize: false, // 是否自适应尺寸
+        text: 'DNB', // 文案
+        background: 'https://seopic.699pic.com/photo/40011/0709.jpg_wh1200.jpg', // 背景
+        loadingText: '加载中' // 加载文案。 默认'加载中。。。。。'
+    });
+
+    jessibuca3.onLog = msg => console.error(msg);
+    jessibuca3.onRecord = (status) => console.log('onRecord3', status);
+    jessibuca3.onPause = () => console.log('onPause3');
+    jessibuca3.onPlay = () => console.log('onPlay3');
+    jessibuca3.onFullscreen = msg => console.log('onFullscreen3', msg);
+    jessibuca3.onMute = msg => console.log('onMute3', msg);
+
+
+    $player3.addEventListener('click', function () {
+        var href = $playHref3.value;
+        if (href) {
+            jessibuca3.play(href);
+        }
+    }, false)
+</script>
+<script>
+    var $player4 = document.getElementById('play4');
+    var $playHref4 = document.getElementById('playHref4');
+    var $container4 = document.getElementById('container4');
+
+    var jessibuca4 = new Jessibuca({
+        container: $container4,
+        videoBuffer: 0.2,
+        decoder: decoderList[3],
+        isResize: false, // 是否自适应尺寸
+        text: 'DNB', // 文案
+        background: 'https://seopic.699pic.com/photo/40011/0709.jpg_wh1200.jpg', // 背景
+        loadingText: '加载中' // 加载文案。 默认'加载中。。。。。'
+    });
+
+    jessibuca4.onLog = msg => console.error(msg);
+    jessibuca4.onRecord = (status) => console.log('onRecord4', status);
+    jessibuca4.onPause = () => console.log('onPause4');
+    jessibuca4.onPlay = () => console.log('onPlay4');
+    jessibuca4.onFullscreen = msg => console.log('onFullscreen4', msg);
+    jessibuca4.onMute = msg => console.log('onMute4', msg);
+
+
+    $player4.addEventListener('click', function () {
+        var href = $playHref4.value;
+        if (href) {
+            jessibuca4.play(href);
         }
     }, false)
 </script>
